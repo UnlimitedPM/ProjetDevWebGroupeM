@@ -52,8 +52,8 @@ const seedDatabase = async () => {
       date: new Date('2025-10-15T20:00:00Z'),
       is_public: true,
       creatorId: adminUser.id,
-      CategoryId: categoryMusic.id,
-      VenueId: venueTheater.id,
+      categoryId: categoryMusic.id,
+      venueId: venueTheater.id,
     });
 
     await Event.create({
@@ -62,8 +62,8 @@ const seedDatabase = async () => {
       date: new Date('2025-11-01T15:00:00Z'),
       is_public: true,
       creatorId: adminUser.id,
-      CategoryId: categorySport.id,
-      VenueId: venueStadium.id,
+      categoryId: categorySport.id,
+      venueId: venueStadium.id,
     });
     console.log('Events created.');
 

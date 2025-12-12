@@ -1,8 +1,19 @@
-const { Event } = require("../models");
+const { Event, User, Category, Venue } = require("../models");
 
 module.exports = {
   cget: async (req, res, next) => {
-    res.json(await Event.findAll());
+    try {
+      const events = await Event.findAll({
+        include: [
+          { model: User, as: 'creator', attributes: ['name'] },
+          { model: Category, as: 'category' },
+          { model: Venue, as: 'venue' },
+        ]
+      });
+      res.json(events);
+    } catch (error) {
+      next(error);
+    }
   },
   create: async (req, res, next) => {
     try {

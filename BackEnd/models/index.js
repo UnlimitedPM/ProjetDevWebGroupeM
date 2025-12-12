@@ -21,29 +21,21 @@ User.hasMany(Event, {
 
 // An event has one category
 Event.belongsTo(Category, {
-  foreignKey: {
-    allowNull: false,
-  },
+  foreignKey: 'categoryId', // Nom explicite de la clé
   as: "category",
 });
 Category.hasMany(Event, {
-  foreignKey: {
-    allowNull: false,
-  },
+  foreignKey: 'categoryId', // Nom explicite de la clé
   as: "events",
 });
 
 // An event has one venue
 Event.belongsTo(Venue, {
-  foreignKey: {
-    allowNull: false,
-  },
+  foreignKey: 'venueId', // Nom explicite de la clé
   as: "venue",
 });
 Venue.hasMany(Event, {
-  foreignKey: {
-    allowNull: false,
-  },
+  foreignKey: 'venueId', // Nom explicite de la clé
   as: "events",
 });
 
