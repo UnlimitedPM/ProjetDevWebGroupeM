@@ -38,8 +38,10 @@ startDB()
     require("./models");
     connection.sync({ alter: true });
     app.use(require("./routes/security"));
-    app.use(require("./routes/users"));
+        app.use(require("./routes/users"));
     app.use(require("./routes/events"));
+    app.use(require("./routes/categories"));
+    app.use(require("./routes/venues"));
 
     app.listen(3000, () => {
       console.log("Server listening on port 3000");

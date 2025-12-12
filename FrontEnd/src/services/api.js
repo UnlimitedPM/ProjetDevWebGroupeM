@@ -42,4 +42,52 @@ export const login = async (email, password) => {
   return await response.json();
 };
 
-// On pourra ajouter ici les autres fonctions : register, createEvent, etc.
+/**
+ * Récupère toutes les catégories.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Array>}
+ */
+export const getCategories = async (token) => {
+  const response = await fetch(`${API_URL}/categories`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error('Failed to fetch categories');
+  return await response.json();
+};
+
+/**
+ * Récupère tous les lieux.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Array>}
+ */
+export const getVenues = async (token) => {
+  const response = await fetch(`${API_URL}/venues`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error('Failed to fetch venues');
+  return await response.json();
+};
+
+/**
+ * Crée un nouvel événement.
+ * @param {Object} eventData - Les données de l'événement à créer.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Object>} L'événement nouvellement créé.
+ */
+export const createEvent = async (eventData, token) => {
+  const response = await fetch(`${API_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(eventData),
+  });
+  if (!response.ok) throw new Error('Failed to create event');
+  return await response.json();
+};
+
