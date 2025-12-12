@@ -46,12 +46,19 @@ const EditEventPage = () => {
     }
   };
 
-  if (!initialData) return <p>Chargement...</p>;
+  if (!initialData) return <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}><p>Chargement...</p></div>;
 
   return (
-    <div>
-      <h2>Modifier l'événement</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div style={{
+      maxWidth: '700px',
+      margin: '2rem auto',
+      background: 'white',
+      padding: '3rem',
+      borderRadius: '16px',
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+    }}>
+      <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>✏️ Modifier l'événement</h2>
+      {error && <p style={{ color: 'var(--danger-color)', background: '#fee2e2', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem' }}>{error}</p>}
       <EventForm
         onSubmit={handleUpdateEvent}
         initialData={initialData}
