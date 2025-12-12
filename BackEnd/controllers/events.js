@@ -5,10 +5,10 @@ module.exports = {
     try {
       const events = await Event.findAll({
         include: [
-          { model: User, as: 'creator', attributes: ['name'] },
-          { model: Category, as: 'category' },
-          { model: Venue, as: 'venue' },
-        ]
+          { model: User, as: "creator", attributes: ["name"] },
+          { model: Category, as: "category" },
+          { model: Venue, as: "venue" },
+        ],
       });
       res.json(events);
     } catch (error) {
@@ -24,7 +24,7 @@ module.exports = {
     }
   },
   get: async (req, res, next) => {
-        const event = await Event.findByPk(req.params.id);
+    const event = await Event.findByPk(req.params.id);
     if (!event) {
       return res.sendStatus(404);
     }
@@ -51,5 +51,87 @@ module.exports = {
       return res.sendStatus(404);
     }
     res.sendStatus(204);
+  },
+
+  // Register user to an event
+  register: async (req, res, next) => {
+    try {
+      const event = await Event.findByPk(req.params.id);
+      if (!event) {
+        return res.sendStatus(404);
+      }
+
+      const user = await User.findByPk(req.user.id);
+      await event.addParticipant(user);
+
+      res.status(200).json({ message: "Inscription réussie" });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // Unregister user from an event
+  unregister: async (req, res, next) => {
+    try {
+      const event = await Event.findByPk(req.params.id);
+      if (!event) {
+        return res.sendStatus(404);
+      }
+
+      const user = await User.findByPk(req.user.id);
+      await event.removeParticipant(user);
+
+      res.status(200).json({ message: "Désinscription réussie" });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // Get participants of an event
+  getParticipants: async (req, res, next) => {
+    try {
+      const event = await Event.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            as: "participants",
+            attributes: ["id", "name", "email"],
+          },
+        ],
+      });
+
+      if (!event) {
+        return res.sendStatus(404);
+      }
+
+      res.json(event.participants);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // Check if user is registered to an event
+  checkRegistration: async (req, res, next) => {
+    try {
+      const event = await Event.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            as: "participants",
+            where: { id: req.user.id },
+            required: false,
+          },
+        ],
+      });
+
+      if (!event) {
+        return res.sendStatus(404);
+      }
+
+      const isRegistered = event.participants.length > 0;
+      res.json({ isRegistered });
+    } catch (error) {
+      next(error);
+    }
   },
 };
