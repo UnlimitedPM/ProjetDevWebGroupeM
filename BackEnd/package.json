@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --watch index.js",
+    "db:seed": "node seed.js",
     "dev:nodemon": "nodemon -L index.js"
   },
   "dependencies": {
