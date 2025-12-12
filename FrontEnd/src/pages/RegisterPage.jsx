@@ -40,12 +40,19 @@ const RegisterPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <h2>Inscription</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="name">Nom:</label>
+    <div style={{
+      maxWidth: '440px',
+      margin: '3rem auto',
+      background: 'white',
+      padding: '3rem',
+      borderRadius: '16px',
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+    }}>
+      <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--text-primary)' }}>Inscription</h2>
+      {error && <p style={{ color: 'var(--danger-color)', background: '#fee2e2', padding: '0.75rem', borderRadius: '8px', textAlign: 'center', marginBottom: '1.5rem' }}>{error}</p>}
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div>
+          <label htmlFor="name">Nom</label>
           <input
             type="text"
             id="name"
@@ -53,11 +60,11 @@ const RegisterPage = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="Votre nom"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="email">Email:</label>
+        <div>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
@@ -65,11 +72,11 @@ const RegisterPage = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="votre@email.com"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="age">Âge:</label>
+        <div>
+          <label htmlFor="age">Âge</label>
           <input
             type="number"
             id="age"
@@ -78,11 +85,11 @@ const RegisterPage = () => {
             onChange={handleChange}
             required
             min="1"
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="25"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="password">Mot de passe:</label>
+        <div>
+          <label htmlFor="password">Mot de passe</label>
           <input
             type="password"
             id="password"
@@ -90,17 +97,15 @@ const RegisterPage = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="••••••••"
           />
         </div>
-        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-          <button type="submit" style={{ padding: '10px 20px' }}>
-            S'inscrire
-          </button>
-          <Link to="/login" style={{ padding: '10px 20px', textDecoration: 'none' }}>
-            Déjà un compte ? Se connecter
-          </Link>
-        </div>
+        <button type="submit" style={{ marginTop: '1rem' }}>
+          S'inscrire
+        </button>
+        <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+          Déjà un compte ? <Link to="/login">Se connecter</Link>
+        </p>
       </form>
     </div>
   );
