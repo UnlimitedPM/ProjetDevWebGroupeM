@@ -91,3 +91,34 @@ export const createEvent = async (eventData, token) => {
   return await response.json();
 };
 
+/**
+ * Récupère un événement par son ID.
+ * @param {string} id - L'ID de l'événement.
+ * @returns {Promise<Object>}
+ */
+export const getEventById = async (id) => {
+  const response = await fetch(`${API_URL}/events/${id}`);
+  if (!response.ok) throw new Error('Failed to fetch event');
+  return await response.json();
+};
+
+/**
+ * Met à jour un événement.
+ * @param {string} id - L'ID de l'événement à mettre à jour.
+ * @param {Object} eventData - Les nouvelles données de l'événement.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Object>} L'événement mis à jour.
+ */
+export const updateEvent = async (id, eventData, token) => {
+  const response = await fetch(`${API_URL}/events/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(eventData),
+  });
+  if (!response.ok) throw new Error('Failed to update event');
+  return await response.json();
+};
+

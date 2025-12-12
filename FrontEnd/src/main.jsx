@@ -8,6 +8,7 @@ import App from './App.jsx';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CreateEventPage from './pages/CreateEventPage';
+import EditEventPage from './pages/EditEventPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const router = createBrowserRouter([
@@ -28,9 +29,13 @@ const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [
-          {
+                    {
             path: '/admin/create-event',
             element: <CreateEventPage />,
+          },
+          {
+            path: '/admin/edit-event/:id',
+            element: <EditEventPage />,
           },
         ],
       },

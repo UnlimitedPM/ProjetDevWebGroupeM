@@ -1,5 +1,6 @@
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { getEvents } from '../services/api';
 import DataTable from '../components/DataTable';
 
@@ -8,30 +9,27 @@ const HomePage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Définition de la configuration des colonnes pour notre tableau
-  const columns = [
-    {
-      Header: 'Nom de l\'événement',
-      accessor: 'name',
-    },
-    {
-      Header: 'Description',
-      accessor: 'description',
-    },
-    {
-      Header: 'Date',
-      accessor: 'date',
-      Cell: ({ value }) => new Date(value).toLocaleDateString(),
-    },
-    {
-      Header: 'Catégorie',
-      accessor: 'category.name', // On utilise l'accès imbriqué !
-    },
-     {
-      Header: 'Lieu',
-      accessor: 'venue.name',
-    },
-  ];
+  const columns = useMemo(() => {
+    const baseColumns = [
+      { Header: 'Nom de l\'événement', accessor: 'name' },
+      { Header: 'Description', accessor: 'description' },
+      { Header: 'Date', accessor: 'date', Cell: ({ value }) => new Date(value).toLocaleDateString() },
+      { Header: 'Catégorie', accessor: 'category.name' },
+      { Header: 'Lieu', accessor: 'venue.name' },
+    ];
+
+    if (isAdmin) {
+      baseColumns.push({
+        Header: 'Actions',
+        accessor: 'id',
+        Cell: ({ value }) => (
+          <Link to={`/admin/edit-event/${value}`}>Modifier</Link>
+        ),
+      });
+    }
+
+    return baseColumns;
+  }, [isAdmin]);
 
   useEffect(() => {
     const fetchEvents = async () => {
