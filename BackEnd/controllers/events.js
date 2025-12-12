@@ -1,26 +1,27 @@
-const Article = require("../models/articles");
+const { Event } = require("../models");
 
 module.exports = {
   cget: async (req, res, next) => {
-    res.json(await Article.findAll());
+    res.json(await Event.findAll());
   },
   create: async (req, res, next) => {
     try {
-      res.status(201).json(await Article.create(req.body));
+      const eventData = { ...req.body, creatorId: req.user.id };
+      res.status(201).json(await Event.create(eventData));
     } catch (error) {
       next(error);
     }
   },
   get: async (req, res, next) => {
-    const article = await Article.findByPk(req.params.id);
-    if (!article) {
+        const event = await Event.findByPk(req.params.id);
+    if (!event) {
       return res.sendStatus(404);
     }
-    res.json(article);
+    res.json(event);
   },
   update: async (req, res, next) => {
     try {
-      const [nbUdated, [updatedArticle]] = await Article.update(req.body, {
+      const [nbUdated, [updatedEvent]] = await Event.update(req.body, {
         where: { id: req.params.id },
         returning: true,
         individualHooks: true,
@@ -28,13 +29,13 @@ module.exports = {
       if (nbUdated === 0) {
         return res.sendStatus(404);
       }
-      res.json(updatedArticle);
+      res.json(updatedEvent);
     } catch (error) {
       next(error);
     }
   },
   delete: async (req, res, next) => {
-    const nbDeleted = await Article.destroy({ where: { id: req.params.id } });
+    const nbDeleted = await Event.destroy({ where: { id: req.params.id } });
     if (nbDeleted === 0) {
       return res.sendStatus(404);
     }
