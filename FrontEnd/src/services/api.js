@@ -26,7 +26,7 @@ export const getEvents = async () => {
  * @returns {Promise<Object>} Une promesse qui résout en un objet contenant le token.
  */
 export const login = async (email, password) => {
-  const response = await fetch(`${API__URL}/login`, {
+  const response = await fetch(`${API_URL}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

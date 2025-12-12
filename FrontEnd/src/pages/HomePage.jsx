@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';import { useState, useEffect } from 'react';
 import { getEvents } from '../services/api';
 import DataTable from '../components/DataTable';
 
 const HomePage = () => {
+  const { isAdmin } = useAuth();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,6 +51,13 @@ const HomePage = () => {
   return (
     <div>
       <h2>Liste des Événements à Venir</h2>
+      {isAdmin && (
+        <div className="admin-actions" style={{ marginBottom: '20px' }}>
+          <Link to="/admin/create-event">
+            <button>Créer un nouvel événement</button>
+          </Link>
+        </div>
+      )}
       {loading ? (
         <p>Chargement des événements...</p>
       ) : (

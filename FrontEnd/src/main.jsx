@@ -7,6 +7,8 @@ import './index.css';
 import App from './App.jsx';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import CreateEventPage from './pages/CreateEventPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -18,9 +20,19 @@ const router = createBrowserRouter([
         path: '/',
         element: <HomePage />,
       },
-      {
+            {
         path: '/login',
         element: <LoginPage />,
+      },
+      // --- Routes Protégées pour les Admins ---
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: '/admin/create-event',
+            element: <CreateEventPage />,
+          },
+        ],
       },
     ],
   },
