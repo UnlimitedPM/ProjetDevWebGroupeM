@@ -64,17 +64,25 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Liste des Événements à Venir</h2>
-      {isAdmin && (
-        <div className="admin-actions" style={{ marginBottom: '20px' }}>
+    <div style={{ background: 'white', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <h2 style={{ margin: 0 }}>🎉 Événements à Venir</h2>
+        {isAdmin && (
           <Link to="/admin/create-event">
-            <button>Créer un nouvel événement</button>
+            <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span>➕</span> Créer un événement
+            </button>
           </Link>
-        </div>
-      )}
+        )}
+      </div>
       {loading ? (
-        <p>Chargement des événements...</p>
+        <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
+          <p>Chargement des événements...</p>
+        </div>
+      ) : events.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
+          <p>Aucun événement disponible pour le moment.</p>
+        </div>
       ) : (
         <DataTable data={events} columns={columns} />
       )}
