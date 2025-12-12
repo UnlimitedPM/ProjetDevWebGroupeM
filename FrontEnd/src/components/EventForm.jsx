@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const EventForm = ({ initialData = {}, onSubmit, isEdit = false }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: initialData.name || '',
     description: initialData.description || '',
@@ -70,7 +72,10 @@ const EventForm = ({ initialData = {}, onSubmit, isEdit = false }) => {
           ))}
         </select>
       </div>
-      <button type="submit">{isEdit ? "Mettre à jour" : "Créer l'événement"}</button>
+      <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+        <button type="submit">{isEdit ? "Mettre à jour" : "Créer l'événement"}</button>
+        <button type="button" onClick={() => navigate('/')}>Annuler</button>
+      </div>
     </form>
   );
 };
