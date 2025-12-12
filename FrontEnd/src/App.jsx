@@ -16,6 +16,11 @@ function App() {
             </li>
             {isAuthenticated ? (
               <>
+                {user.role === 'ADMIN' && (
+                  <li>
+                    <Link to="/admin/create-event">Créer un événement</Link>
+                  </li>
+                )}
                 <li>
                   <span>Bonjour, {user.name} ({user.role})</span>
                 </li>
@@ -24,9 +29,14 @@ function App() {
                 </li>
               </>
             ) : (
-              <li>
-                <Link to="/login">Connexion</Link>
-              </li>
+              <>
+                <li>
+                  <Link to="/login">Connexion</Link>
+                </li>
+                <li>
+                  <Link to="/register">Inscription</Link>
+                </li>
+              </>
             )}
           </ul>
         </nav>
