@@ -37,8 +37,9 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        // is: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\dA-Za-z]).{8,32}$/,
+          validate: {
+        // La validation par regex peut être ajoutée ici si besoin.
+        // ex: is: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\dA-Za-z]).{8,32}$/
       },
     },
   },

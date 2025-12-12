@@ -1,13 +1,27 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { getEvents } from '../services/api';
+import { getEvents, deleteEvent } from '../services/api';
 import DataTable from '../components/DataTable';
 
 const HomePage = () => {
-  const { isAdmin } = useAuth();
+  const { isAdmin, token } = useAuth();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const handleDelete = async (eventId) => {
+    // Demander une confirmation avant la suppression
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
+      try {
+        await deleteEvent(eventId, token);
+        // Mettre à jour la liste des événements en filtrant celui qui a été supprimé
+        setEvents(events.filter(event => event.id !== eventId));
+      } catch (error) {
+        console.error('Failed to delete event:', error);
+        // On pourrait afficher une notification d'erreur ici
+      }
+    }
+  };
 
   const columns = useMemo(() => {
     const baseColumns = [
@@ -23,13 +37,16 @@ const HomePage = () => {
         Header: 'Actions',
         accessor: 'id',
         Cell: ({ value }) => (
-          <Link to={`/admin/edit-event/${value}`}>Modifier</Link>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Link to={`/admin/edit-event/${value}`}>Modifier</Link>
+            <button onClick={() => handleDelete(value)}>Supprimer</button>
+          </div>
         ),
       });
     }
 
     return baseColumns;
-  }, [isAdmin]);
+  }, [isAdmin, events]); // Ajouter 'events' aux dépendances pour que la fonction de suppression ait la bonne portée
 
   useEffect(() => {
     const fetchEvents = async () => {

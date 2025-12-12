@@ -122,3 +122,20 @@ export const updateEvent = async (id, eventData, token) => {
   return await response.json();
 };
 
+/**
+ * Supprime un événement.
+ * @param {string} id - L'ID de l'événement à supprimer.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<void>}
+ */
+export const deleteEvent = async (id, token) => {
+  const response = await fetch(`${API_URL}/events/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error('Failed to delete event');
+  // La réponse DELETE n'a généralement pas de contenu, donc on ne retourne rien.
+};
+
