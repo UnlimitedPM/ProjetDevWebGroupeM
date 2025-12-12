@@ -159,3 +159,72 @@ export const deleteEvent = async (id, token) => {
   if (!response.ok) throw new Error("Failed to delete event");
   // La réponse DELETE n'a généralement pas de contenu, donc on ne retourne rien.
 };
+
+/**
+ * Inscrit l'utilisateur à un événement.
+ * @param {string} eventId - L'ID de l'événement.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Object>}
+ */
+export const registerToEvent = async (eventId, token) => {
+  const response = await fetch(`${API_URL}/events/${eventId}/register`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to register to event");
+  return await response.json();
+};
+
+/**
+ * Désinscrit l'utilisateur d'un événement.
+ * @param {string} eventId - L'ID de l'événement.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Object>}
+ */
+export const unregisterFromEvent = async (eventId, token) => {
+  const response = await fetch(`${API_URL}/events/${eventId}/register`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to unregister from event");
+  return await response.json();
+};
+
+/**
+ * Vérifie si l'utilisateur est inscrit à un événement.
+ * @param {string} eventId - L'ID de l'événement.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Object>} Objet avec isRegistered (boolean).
+ */
+export const checkEventRegistration = async (eventId, token) => {
+  const response = await fetch(
+    `${API_URL}/events/${eventId}/check-registration`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!response.ok) throw new Error("Failed to check registration");
+  return await response.json();
+};
+
+/**
+ * Récupère la liste des participants d'un événement.
+ * @param {string} eventId - L'ID de l'événement.
+ * @param {string} token - Le token JWT pour l'authentification.
+ * @returns {Promise<Array>}
+ */
+export const getEventParticipants = async (eventId, token) => {
+  const response = await fetch(`${API_URL}/events/${eventId}/participants`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to fetch participants");
+  return await response.json();
+};
