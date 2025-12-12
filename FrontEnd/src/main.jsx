@@ -7,6 +7,7 @@ import './index.css';
 import App from './App.jsx';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import CreateEventPage from './pages/CreateEventPage';
 import EditEventPage from './pages/EditEventPage';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -21,9 +22,13 @@ const router = createBrowserRouter([
         path: '/',
         element: <HomePage />,
       },
-            {
+      {
         path: '/login',
         element: <LoginPage />,
+      },
+      {
+        path: '/register',
+        element: <RegisterPage />,
       },
       // --- Routes Protégées pour les Admins ---
       {
