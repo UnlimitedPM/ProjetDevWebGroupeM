@@ -1,2 +1,5 @@
 /node_modules
 /dist
+
+/BackEnd/node_modules
+/BackEnd/dist
