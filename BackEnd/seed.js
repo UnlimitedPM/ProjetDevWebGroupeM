@@ -67,9 +67,9 @@ const seedDatabase = async () => {
     });
     console.log('Events created.');
 
-    console.log('✅ Seeding completed successfully!');
+    console.log('201');
   } catch (error) {
-    console.error('❌ Failed to seed database:', error);
+    console.error('400', error);
   } finally {
     // Fermer la connexion à la base de données
     if (db.connection) {

@@ -1,10 +1,28 @@
-import { useState, useEffect } from 'react';
+import DataTable from './components/DataTable';import { useState, useEffect } from 'react';
 import { getEvents } from './services/api';
 import './App.css';
 
 function App() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Définition de la configuration des colonnes pour notre tableau
+  const columns = [
+    {
+      Header: 'Nom de l\'événement',
+      accessor: 'name', // Clé dans l'objet 'event'
+    },
+    {
+      Header: 'Description',
+      accessor: 'description',
+    },
+        {
+      Header: 'Date',
+      accessor: 'date',
+      // On utilise notre nouvelle fonction Cell pour formater la date
+      Cell: ({ value }) => new Date(value).toLocaleDateString(),
+    },
+  ];
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -30,24 +48,10 @@ function App() {
       </header>
       <main>
         <h2>Liste des Événements à Venir</h2>
-        {loading ? (
+                {loading ? (
           <p>Chargement des événements...</p>
         ) : (
-          <ul>
-            {events.length > 0 ? (
-              events.map((event) => (
-                <li key={event.id}>
-                  <h3>{event.name}</h3>
-                  <p>{event.description}</p>
-                  <p>
-                    <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
-                  </p>
-                </li>
-              ))
-            ) : (
-              <p>Aucun événement trouvé.</p>
-            )}
-          </ul>
+          <DataTable data={events} columns={columns} />
         )}
       </main>
     </div>
