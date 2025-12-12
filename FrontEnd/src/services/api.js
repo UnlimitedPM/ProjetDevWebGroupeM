@@ -19,4 +19,27 @@ export const getEvents = async () => {
   }
 };
 
-// On pourra ajouter ici les autres fonctions : login, register, createEvent, etc.
+/**
+ * Connecte un utilisateur.
+ * @param {string} email - L'email de l'utilisateur.
+ * @param {string} password - Le mot de passe de l'utilisateur.
+ * @returns {Promise<Object>} Une promesse qui résout en un objet contenant le token.
+ */
+export const login = async (email, password) => {
+  const response = await fetch(`${API__URL}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    // Gérer les erreurs de connexion (ex: 401 Unauthorized)
+    throw new Error('Login failed');
+  }
+
+  return await response.json();
+};
+
+// On pourra ajouter ici les autres fonctions : register, createEvent, etc.
