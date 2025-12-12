@@ -20,6 +20,27 @@ export const getEvents = async () => {
 };
 
 /**
+ * Inscrit un nouvel utilisateur.
+ * @param {Object} userData - Les données de l'utilisateur (name, email, password, age).
+ * @returns {Promise<Object>} Une promesse qui résout en l'utilisateur créé.
+ */
+export const register = async (userData) => {
+  const response = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Registration failed");
+  }
+
+  return await response.json();
+};
+
+/**
  * Connecte un utilisateur.
  * @param {string} email - L'email de l'utilisateur.
  * @param {string} password - Le mot de passe de l'utilisateur.
@@ -27,16 +48,16 @@ export const getEvents = async () => {
  */
 export const login = async (email, password) => {
   const response = await fetch(`${API_URL}/login`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
   });
 
   if (!response.ok) {
     // Gérer les erreurs de connexion (ex: 401 Unauthorized)
-    throw new Error('Login failed');
+    throw new Error("Login failed");
   }
 
   return await response.json();
@@ -50,10 +71,10 @@ export const login = async (email, password) => {
 export const getCategories = async (token) => {
   const response = await fetch(`${API_URL}/categories`, {
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
-  if (!response.ok) throw new Error('Failed to fetch categories');
+  if (!response.ok) throw new Error("Failed to fetch categories");
   return await response.json();
 };
 
@@ -65,10 +86,10 @@ export const getCategories = async (token) => {
 export const getVenues = async (token) => {
   const response = await fetch(`${API_URL}/venues`, {
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
-  if (!response.ok) throw new Error('Failed to fetch venues');
+  if (!response.ok) throw new Error("Failed to fetch venues");
   return await response.json();
 };
 
@@ -80,14 +101,14 @@ export const getVenues = async (token) => {
  */
 export const createEvent = async (eventData, token) => {
   const response = await fetch(`${API_URL}/events`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(eventData),
   });
-  if (!response.ok) throw new Error('Failed to create event');
+  if (!response.ok) throw new Error("Failed to create event");
   return await response.json();
 };
 
@@ -98,7 +119,7 @@ export const createEvent = async (eventData, token) => {
  */
 export const getEventById = async (id) => {
   const response = await fetch(`${API_URL}/events/${id}`);
-  if (!response.ok) throw new Error('Failed to fetch event');
+  if (!response.ok) throw new Error("Failed to fetch event");
   return await response.json();
 };
 
@@ -111,14 +132,14 @@ export const getEventById = async (id) => {
  */
 export const updateEvent = async (id, eventData, token) => {
   const response = await fetch(`${API_URL}/events/${id}`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(eventData),
   });
-  if (!response.ok) throw new Error('Failed to update event');
+  if (!response.ok) throw new Error("Failed to update event");
   return await response.json();
 };
 
@@ -130,12 +151,11 @@ export const updateEvent = async (id, eventData, token) => {
  */
 export const deleteEvent = async (id, token) => {
   const response = await fetch(`${API_URL}/events/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
-  if (!response.ok) throw new Error('Failed to delete event');
+  if (!response.ok) throw new Error("Failed to delete event");
   // La réponse DELETE n'a généralement pas de contenu, donc on ne retourne rien.
 };
-
