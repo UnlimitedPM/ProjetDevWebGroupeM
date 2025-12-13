@@ -11,6 +11,9 @@ import RegisterPage from './pages/RegisterPage';
 import CreateEventPage from './pages/CreateEventPage';
 import EditEventPage from './pages/EditEventPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import CategoriesPage from './pages/categoriesPage.jsx';
+import VenuesPage from './pages/VenuesPage.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,16 @@ const router = createBrowserRouter([
         path: '/register',
         element: <RegisterPage />,
       },
+
+      {
+  path: '/categories',
+  element: <CategoriesPage />,
+},
+{
+  path: '/venues',
+  element: <VenuesPage />,
+},
+
       // --- Routes Protégées pour les Admins ---
       {
         element: <ProtectedRoute />,

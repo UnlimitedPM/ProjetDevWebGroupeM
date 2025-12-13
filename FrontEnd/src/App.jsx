@@ -14,6 +14,13 @@ function App() {
             <li>
               <Link to="/">Accueil</Link>
             </li>
+            <li>
+  <Link to="/categories">Catégories</Link>
+</li>
+<li>
+  <Link to="/venues">Lieux</Link>
+</li>
+
             {isAuthenticated ? (
               <>
                 {user.role === 'ADMIN' && (
